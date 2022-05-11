@@ -1,6 +1,7 @@
 package com.google.workprofiledemo
 
 import android.Manifest
+import android.content.pm.CrossProfileApps
 
 import android.content.pm.PackageManager
 import android.database.Cursor
@@ -9,6 +10,7 @@ import android.os.Bundle
 import android.provider.ContactsContract
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.widget.AppCompatButton
 import androidx.loader.app.LoaderManager
 import androidx.loader.content.CursorLoader
 import androidx.loader.content.Loader
@@ -22,6 +24,7 @@ const val WORK_CONTACTS_LOADER_ID = 1
 
 class MainActivity : AppCompatActivity(), LoaderManager.LoaderCallbacks<Cursor> {
     private lateinit var recyclerView: RecyclerView
+    private lateinit var button: AppCompatButton
     private lateinit var viewAdapter: RecyclerView.Adapter<*>
     private lateinit var viewManager: RecyclerView.LayoutManager
 
@@ -48,6 +51,18 @@ class MainActivity : AppCompatActivity(), LoaderManager.LoaderCallbacks<Cursor> 
             initLoaders()
         }
 
+        val crossProfileApps = getSystemService(CrossProfileApps::class.java)
+        val userHandles = crossProfileApps.targetUserProfiles
+        val label = crossProfileApps.getProfileSwitchingLabel(userHandles.first())
+        button = findViewById<AppCompatButton>(R.id.button).apply {
+            text = label
+            setOnClickListener {
+                crossProfileApps.startMainActivity(
+                    componentName,
+                    userHandles.first()
+                )
+            }
+        }
     }
 
     override fun onRequestPermissionsResult(
