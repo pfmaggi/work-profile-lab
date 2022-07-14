@@ -14,26 +14,19 @@
  * limitations under the License.
  */
 
-buildscript {
-    ext.kotlin_version = '1.7.0'
-    repositories {
-        google()
-        mavenCentral()
-        
-    }
-    dependencies {
-        classpath 'com.android.tools.build:gradle:7.2.1'
-        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
-    }
-}
+package com.example.workprofile
 
-allprojects {
-    repositories {
-        google()
-        mavenCentral()
-    }
-}
+import org.junit.Assert.assertEquals
+import org.junit.Test
 
-task clean(type: Delete) {
-    delete rootProject.buildDir
+/**
+ * Example local unit test, which will execute on the development machine (host).
+ *
+ * See [testing documentation](http://d.android.com/tools/testing).
+ */
+class ExampleUnitTest {
+    @Test
+    fun addition_isCorrect() {
+        assertEquals(4, 2 + 2)
+    }
 }
